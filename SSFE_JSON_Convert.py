@@ -1,13 +1,10 @@
 import json
 
 with open('INPUT.txt', 'r') as f:
-    # Read the content of the file as a string
     variables = f.read()
 
-# Remove any whitespace characters
 variables = variables.replace(' ', '').replace('\n', '')
 
-# Split the variables into a list
 variables_list = variables.split(',')
 
 variables_dict = {}
