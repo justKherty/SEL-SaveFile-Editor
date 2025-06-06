@@ -26,12 +26,17 @@ def load_chapters(path: str) -> list[str]:
     return [c for c in text.split(",") if c]
 
 
-def main() -> None:
-    data = load_json(INPUT_FILE)
-    chapters = load_chapters(CHAPTERS_FILE)
+def mark_chapters_viewed(data: dict, chapters: list[str]) -> None:
+    """Set ``is_viewed`` to ``1`` for each chapter in ``chapters``."""
     for chapter in chapters:
         if chapter in data:
             data[chapter]["is_viewed"] = 1
+
+
+def main() -> None:
+    data = load_json(INPUT_FILE)
+    chapters = load_chapters(CHAPTERS_FILE)
+    mark_chapters_viewed(data, chapters)
     save_json(OUTPUT_FILE, data)
 
 

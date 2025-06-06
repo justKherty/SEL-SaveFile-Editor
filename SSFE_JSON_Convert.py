@@ -1,20 +1,38 @@
+"""Convert raw save data into a JSON compatible dictionary."""
+
 import json
 
-with open('INPUT.txt', 'r') as f:
-    variables = f.read()
 
-variables = variables.replace(' ', '').replace('\n', '')
+def convert_raw_to_json(path: str = "INPUT.txt", output: str | None = "INPUT.json") -> dict:
+    """Read ``path`` and return a dictionary with chapter states.
 
-variables_list = variables.split(',')
+    If ``output`` is provided, the resulting dictionary is also written to that
+    JSON file.
+    """
 
-variables_dict = {}
+    with open(path, "r") as f:
+        variables = f.read()
 
-for variable in variables_list:
-    key, value = variable.split(':')
-    key = key.replace('"', '')
-    value = value.replace('"', '')
-    value = int(value)
-    variables_dict[key] = {"is_viewed": value}
+    variables = variables.replace(" ", "").replace("\n", "")
 
-json_str = json.dumps(variables_dict)
-print(json_str)
+    variables_dict = {}
+    for variable in variables.split(","):
+        key, value = variable.split(":")
+        key = key.replace('"', "")
+        value = int(value.replace('"', ""))
+        variables_dict[key] = {"is_viewed": value}
+
+    if output:
+        with open(output, "w") as f:
+            json.dump(variables_dict, f, indent=4)
+
+    return variables_dict
+
+
+def main() -> None:
+    data = convert_raw_to_json()
+    print(json.dumps(data))
+
+
+if __name__ == "__main__":
+    main()
