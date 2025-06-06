@@ -9,7 +9,6 @@ def convert_raw_to_json(path: str = "INPUT.txt", output: str | None = "INPUT.jso
     If ``output`` is provided, the resulting dictionary is also written to that
     JSON file.
     """
-
     with open(path, "r") as f:
         variables = f.read()
 
