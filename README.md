@@ -4,13 +4,13 @@ Before proceeding, please make yourself knowledgeable of the license used by thi
 
 -- How it works --
 
-The workflow has been consolidated into a single entry point, ``SSFE.py``.  It
-converts the raw save file, applies chapter updates from ``CHAPTERS.txt`` and
-writes the final JSON.  Run the script with optional arguments to override the
-default paths:
+The workflow has been consolidated into a single command-line interface.  The
+``cli.py`` script wraps the helper modules and performs every step: converting
+the raw save file, marking viewed chapters and writing the final JSON.  Run it
+with optional arguments to override the default paths:
 
 ```
-python SSFE.py --raw INPUT.txt --chapters CHAPTERS.txt --output OUTPUT.json
+python cli.py --raw INPUT.txt --chapters CHAPTERS.txt --output OUTPUT.json
 ```
 
 ``CHAPTERS.txt`` should contain a comma-separated list of chapter IDs you have
