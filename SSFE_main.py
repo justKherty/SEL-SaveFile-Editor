@@ -1,29 +1,44 @@
-#NON FUNCTIONAL!!!
+"""Update chapter completion states based on a user provided file."""
 
 import json
+from pathlib import Path
 
-input_file_name = "INPUT.json"
-output_file_name = "OUTPUT.json"
+INPUT_FILE = "INPUT.json"
+OUTPUT_FILE = "OUTPUT.json"
+CHAPTERS_FILE = "CHAPTERS.txt"
 
-#key_to_compare = "Cou041"
 
-# Read in the input file
-with open(input_file_name, "r") as f:
-    input_data = json.load(f)
+def load_json(path: str) -> dict:
+    with open(path, "r") as f:
+        return json.load(f)
 
-try:
-    with open(output_file_name, "r") as f:
-        output_data = json.load(f)
-except FileNotFoundError:
-    output_data = {}
 
-if key_to_compare in input_data and key_to_compare in output_data:
-    if input_data[key_to_compare]["is_viewed"] == 0 and output_data[key_to_compare]["is_viewed"] == 1:
-        input_data[key_to_compare]["is_viewed"] = 1
-elif key_to_compare in input_data:
-    output_data[key_to_compare] = {"is_viewed": 0}
+def save_json(path: str, data: dict) -> None:
+    with open(path, "w") as f:
+        json.dump(data, f, indent=4)
 
-with open(input_file_name, "w") as f:
-    json.dump(input_data, f, indent=4)
-with open(output_file_name, "w") as f:
-    json.dump(output_data, f, indent=4)
+
+def load_chapters(path: str) -> list[str]:
+    if not Path(path).exists():
+        return []
+    with open(path, "r") as f:
+        text = f.read().replace("\n", "").replace(" ", "")
+    return [c for c in text.split(",") if c]
+
+
+def mark_chapters_viewed(data: dict, chapters: list[str]) -> None:
+    """Set ``is_viewed`` to ``1`` for each chapter in ``chapters``."""
+    for chapter in chapters:
+        if chapter in data:
+            data[chapter]["is_viewed"] = 1
+
+
+def main() -> None:
+    data = load_json(INPUT_FILE)
+    chapters = load_chapters(CHAPTERS_FILE)
+    mark_chapters_viewed(data, chapters)
+    save_json(OUTPUT_FILE, data)
+
+
+if __name__ == "__main__":
+    main()

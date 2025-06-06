@@ -1,12 +1,19 @@
-import subprocess
-import json
+"""Utility script to orchestrate save file conversions."""
 
-subprocess.run(["python", "SSFE_JSON_Convert.py"])
+from SSFE_JSON_Convert import convert_raw_to_json
+from SSFE_main import (
+    load_chapters,
+    mark_chapters_viewed,
+    save_json,
+)
 
-with open("output.json", "r") as f:
-    data = json.load(f)
 
-subprocess.run(["python", "SSFE_main.py"])
+def main() -> None:
+    data = convert_raw_to_json()
+    chapters = load_chapters("CHAPTERS.txt")
+    mark_chapters_viewed(data, chapters)
+    save_json("OUTPUT.json", data)
 
-with open("output.json", "w") as f:
-    json.dump(data, f)
+
+if __name__ == "__main__":
+    main()
