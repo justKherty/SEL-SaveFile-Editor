@@ -3,7 +3,9 @@
 import json
 
 
-def convert_raw_to_json(path: str = "INPUT.txt", output: str | None = "INPUT.json") -> dict:
+def convert_raw_to_json(
+    path: str = "INPUT.txt", output: str | None = "INPUT.json"
+) -> dict:
     """Read ``path`` and return a dictionary with chapter states.
 
     If ``output`` is provided, the resulting dictionary is also written to that
@@ -32,14 +34,6 @@ def main() -> None:
     data = convert_raw_to_json()
     print(json.dumps(data))
 
-=======
-for variable in variables_list:
-    key, value = variable.split(':')
-    key = key.replace('"', '')
-    value = value.replace('"', '')
-    value = int(value)
-    variables_dict[key] = {"is_viewed": value}
-main
 
 if __name__ == "__main__":
     main()
