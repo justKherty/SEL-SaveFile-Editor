@@ -32,6 +32,14 @@ def main() -> None:
     data = convert_raw_to_json()
     print(json.dumps(data))
 
+=======
+for variable in variables_list:
+    key, value = variable.split(':')
+    key = key.replace('"', '')
+    value = value.replace('"', '')
+    value = int(value)
+    variables_dict[key] = {"is_viewed": value}
+main
 
 if __name__ == "__main__":
     main()

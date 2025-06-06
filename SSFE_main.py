@@ -37,6 +37,14 @@ def main() -> None:
     data = load_json(INPUT_FILE)
     chapters = load_chapters(CHAPTERS_FILE)
     mark_chapters_viewed(data, chapters)
+=======
+def main() -> None:
+    data = load_json(INPUT_FILE)
+    chapters = load_chapters(CHAPTERS_FILE)
+    for chapter in chapters:
+        if chapter in data:
+            data[chapter]["is_viewed"] = 1
+main
     save_json(OUTPUT_FILE, data)
 
 
